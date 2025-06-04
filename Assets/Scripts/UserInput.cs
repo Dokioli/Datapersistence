@@ -1,5 +1,9 @@
 using TMPro;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class UserInput : MonoBehaviour
@@ -9,12 +13,27 @@ public class UserInput : MonoBehaviour
 
     private void Start()
     {
-        nameText.text = "Best Score: " + PlayerPrefs.GetString("PlayerName", "Player") + ":"+PlayerPrefs.GetInt("BestScore", 0);
+        nameText.text = "Best Score: " + PlayerPrefs.GetString("PlayerName", "Player") + ":" + PlayerPrefs.GetInt("BestScore", 0);
     }
 
     public void SetText()
     {
         PlayerPrefs.SetString("PlayerName", inputField.text);
+    }
+
+    public void LoadLevel()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit();
+#endif
+
     }
 
 }
